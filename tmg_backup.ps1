@@ -36,6 +36,7 @@ Foreach ($vArray in $vArrays)
 $secpasswd = ConvertTo-SecureString "SECRETPASSWORD" -AsPlainText -Force
 $mycreds = New-Object System.Management.Automation.PSCredential ("example@example.com", $secpasswd)
 $encoding = [System.Text.Encoding]::UTF8
+#[System.Net.ServicePointManager]::SecurityProtocol = "Tls,TLS11,TLS12" # Uncomment it to use TLS not SSL
 Send-MailMessage -To "example@example.com" -Subject "TMG Backup" -Body $gvBackupDir -SmtpServer "smtp.example.com" -Credential $mycreds -Port 587 -UseSsl -from "example@example.com" -Encoding $encoding -Attachment $gvExportDir\$vFName.7z
 
 Move-Item $gvExportDir\$vFName.7z $gvBackupDir
